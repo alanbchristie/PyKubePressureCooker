@@ -1,9 +1,3 @@
-# -----------------------------------------------------------------------------
-# Copyright (C) 2017 Matilda Peak - All Rights Reserved.
-# Unauthorized copying of this file, via any medium is strictly prohibited.
-# Proprietary and confidential.
-# -----------------------------------------------------------------------------
-
 # .gitignore file.
 # Git uses this file to determine which files and directories
 # to ignore before a commit is performed.
