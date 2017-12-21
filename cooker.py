@@ -5,6 +5,7 @@ life-cycle, recording those that launched successfully and those that
 failed.
 """
 
+import os
 import time
 
 from runner.runner import RunnerState, RunnerStateTuple
@@ -76,6 +77,12 @@ def main():
 
     print('MaxConcurrent=%s' % _MAX_CONCURRENT)
     print('Complete!')
+
+    # If running from within Kubernetes (OpenSHift) - just park ourselves here.
+    # It stops the replication controller starting us up again!
+    if os.environ.get('KUBERNETES_SERVICE_HOST'):
+        print("That's all Folks!")
+        input()
 
 
 # -----------------------------------------------------------------------------

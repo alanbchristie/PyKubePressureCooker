@@ -1,15 +1,15 @@
 ---
 
-# The PyKubePressureCooker Deployment Configureation template.
+# The PyKubePressureCooker Deployment Configuration template.
 #
-# To load: oc process -f cooker.yml | oc create -f -
+# To load:   oc process -f cooker.yml | oc create -f -
 # To unload: oc delete all --selector template=pressure-cooker
 #
 # To give cluster-admin to the default service account and avoid the
 # API error:
 #   system:serviceaccount:cooker-pot:default
-#      cannot create jobs.batch in project patterneer
-# Run the following command...
+#      cannot create jobs.batch in project cooker-pot
+# Run the following command as system:admin...
 #
 # oc adm policy add-cluster-role-to-user cluster-admin -z default
 
@@ -45,6 +45,25 @@ parameters:
     description: >
       The Docker image tag for the container image
 
+  - name: BUSY_PERIOD
+    value: '0.0'
+  - name: BUSY_PROCESSES
+    value: '0'
+  - name: CPU_LIMIT
+    value: '150m'
+  - name: CPU_REQUEST
+    value: '150m'
+  - name: MEMORY_LIMIT
+    value: '10Mi'
+  - name: MEMORY_REQUEST
+    value: '10Mi'
+  - name: NUM_PODS
+    value: '10'
+  - name: PRE_BUSY_SLEEP_S
+    value: '120.0'
+  - name: USE_MEMORY_M
+    value: '0'
+
 # -----------------------------------------------------------------------------
 
 objects:
@@ -70,23 +89,23 @@ objects:
             name: ${{IMAGE_NAME}}
             env:
             - name: COOKER_BUSY_PERIOD
-              value: 0.0
+              value: ${BUSY_PERIOD}
             - name: COOKER_BUSY_PROCESSES
-              value: 0
+              value: ${BUSY_PROCESSES}
             - name: COOKER_CPU_LIMIT
-              value: 150m
+              value: ${CPU_LIMIT}
             - name: COOKER_CPU_REQUEST
-              value: 150m
+              value: ${CPU_REQUEST}
             - name: COOKER_MEMORY_LIMIT
-              value: 10Mi
+              value: ${MEMORY_LIMIT}
             - name: COOKER_MEMORY_REQUEST
-              value: 10Mi
+              value: ${MEMORY_REQUEST}
             - name: COOKER_NUM_PODS
-              value: 10
+              value: ${NUM_PODS}
             - name: COOKER_PRE_BUSY_SLEEP_S
-              value: 120.0
+              value: ${PRE_BUSY_SLEEP_S}
             - name: COOKER_USE_MEMORY_M
-              value: 0
+              value: ${USE_MEMORY_M}
             resources:
               limits:
                 cpu: 1000m
