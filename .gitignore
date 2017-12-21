@@ -1,0 +1,141 @@
+# -----------------------------------------------------------------------------
+# Copyright (C) 2017 Matilda Peak - All Rights Reserved.
+# Unauthorized copying of this file, via any medium is strictly prohibited.
+# Proprietary and confidential.
+# -----------------------------------------------------------------------------
+
+# .gitignore file.
+# Git uses this file to determine which files and directories
+# to ignore before a commit is performed.
+
+# ---
+# Our detritus
+# ---
+
+setenv.sh
+
+# --------
+# AutoConf detritus
+# --------
+
+configure
+config.status
+autom4te.cache/
+
+# ------
+# Python detritus
+# ------
+# Important bits from Python.gitignore
+# See: https://github.com/github/gitignore/blob/master/Python.gitignore
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.mo
+*.pot
+*.log
+docs/_build/
+target/
+nose2-junit.xml
+
+# ----
+# Java detritus
+# ----
+
+target/
+
+# ------
+# Gradle detritus
+# ------
+
+.gradle
+/build/
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# ---------
+# JetBrains detritus
+# ---------
+# Important bits from JetBrains.gitignore
+# See: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+#
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
+
+*.iml
+.idea/
+*.ipr
+*.iws
+/out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+
+# -----
+# Scala detritus
+# -----
+
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# ENSIME specific
+.ensime_cache/
+.ensime
+
+# -------
+# Doxygen detritus
+# -------
+# Our use of Doxygen
+
+doxygen/
+
+# -------
+# Twisted detritus
+# -------
+
+_trial_temp/
