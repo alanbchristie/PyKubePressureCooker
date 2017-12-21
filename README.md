@@ -14,10 +14,44 @@ You will need:
     `minishift start --cpus 4 --memory 8GB --disk-size 40GB
         --openshift-version 3.6.0 --vm-driver virtualbox`
 
+## Background
+This application has been designed to launch a test image in OpenShift
+for the purposes of analysing OpenShift's behaviour when presented with
+the concurrent execution of a large number of container images, CPU and
+memory pressures and observe teh OpenShift queue process and its reaction
+to a Job that exceeds its defined CPU and memory limits.
+
+The application and the test image can be found on the Docker hub as:
+
+-   `alanbchristie/pykubepressurecooker` (the main app)
+-   `alanbchristie/pydatalister` (launched as child jobs)
+
+>   The application (and the pods it creates) is written in Python 3.
+
+>   The application can be run from source on the command-line using its
+    public GitHub repository. Instructions for running from the command-line
+    and form within OpenShift can be found later in this README.
+
+Using environment variables (from the command-line) or template parameters
+(for an OpenShift application) the application allows you to set the number
+of concurrently executing child Jobs. These jobs can be configured to run for
+a period of time and also be configured to:
+
+-   burn-up the CPU with 1 or more processing threads (which is accomplished
+    by calculating large factorials on a configurable number of
+    parallel threads) and...
+-   consume a prescribed amount of memory
+
+These features allow you to exercise OpenShift's container-based queueing,
+CPU and Memory limits.
+
+Using this application you can judge how OpenShift reacts to a large
+number of containers that can be set to be _busy_ and _big_.
+
 ## Application configuration
 The application, which uses the [PyDataLister] container image,
-can be configured with a number of environment variables,
-(with default values being used if not specified):
+can be configured with a number of environment variables or template
+parameters. The default values are displayed in brackets:
 
 -   `COOKER_BUSY_PERIOD`
     The period of time to burn the CPU, in seconds. The CPU stressing
@@ -82,11 +116,11 @@ You can define the behaviour of the spawned `PyDataLister` jobs using the
 parameters exposed in the template.
 
 To run the app within OpenShift (this example uses minishift) you need
-To give cluster-admin to the default service account, this is because you
+to give `cluster-admin` to the `default` service account, this is because you
 need to allow the application container to create Pods.
 
 To do this run the following command as the `system:admin` user
-in the `pressure-pot` project...
+in a `pressure-pot` project...
 
     $ eval $(minishift oc-env)
     $ oc login -u admin
