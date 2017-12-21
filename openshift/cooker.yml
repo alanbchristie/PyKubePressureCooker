@@ -1,0 +1,93 @@
+---
+
+# The PyKubePressureCooker Deployment Configureation template.
+#
+# To load: oc process -f cooker.yml | oc create -f -
+# To unload: oc delete all --selector template=pressure-cooker
+#
+# To give cluster-admin to the default service account and avoid the
+# API error:
+#   system:serviceaccount:cooker-pot:default
+#      cannot create jobs.batch in project patterneer
+# Run the following command...
+#
+# oc adm policy add-cluster-role-to-user cluster-admin -z default
+
+kind: Template
+apiVersion: v1
+metadata:
+  name: pressure-cooker
+  annotations:
+    description: The PyKubePressureCooker Application
+    tags: pressure-cooker
+labels:
+  template: pressure-cooker
+
+# -----------------------------------------------------------------------------
+
+parameters:
+
+  - name: IMAGE_NAME
+    value: pykubepressurecooker
+    description: >
+      The name of the template application.
+      This is not normally changed but is a parameter because it
+      is used in several places in the template.
+
+  - name: OWNER
+    value: alanbchristie
+    description: >
+      The GitLab user or group the image belongs to.
+      In our case this is the MatildaPeak group of repositories.
+
+  - name: TAG
+    value: 'latest'
+    description: >
+      The Docker image tag for the container image
+
+# -----------------------------------------------------------------------------
+
+objects:
+
+  - kind: DeploymentConfig
+    apiVersion: v1
+    metadata:
+      name: ${{IMAGE_NAME}}
+    annotations:
+      description: >
+        The Pressure Cooker deployment
+    spec:
+      replicas: 1
+      selector:
+        name: ${{IMAGE_NAME}}
+      template:
+        metadata:
+          labels:
+            name: ${{IMAGE_NAME}}
+        spec:
+          containers:
+          - image: ${OWNER}/${IMAGE_NAME}:${TAG}
+            name: ${{IMAGE_NAME}}
+            env:
+            - name: COOKER_BUSY_PERIOD
+              value: 0.0
+            - name: COOKER_BUSY_PROCESSES
+              value: 0
+            - name: COOKER_CPU_LIMIT
+              value: 150m
+            - name: COOKER_CPU_REQUEST
+              value: 150m
+            - name: COOKER_MEMORY_LIMIT
+              value: 10Mi
+            - name: COOKER_MEMORY_REQUEST
+              value: 10Mi
+            - name: COOKER_NUM_PODS
+              value: 10
+            - name: COOKER_PRE_BUSY_SLEEP_S
+              value: 120.0
+            - name: COOKER_USE_MEMORY_M
+              value: 0
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 2Gi

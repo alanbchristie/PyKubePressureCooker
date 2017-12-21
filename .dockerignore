@@ -1,0 +1,6 @@
+# Ignore everything...
+*
+# Except...
+!cooker.py
+!requirements.txt
+!runner/

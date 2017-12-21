@@ -25,9 +25,9 @@ can be configured with a number of environment variables,
 -   `COOKER_CPU_REQUEST`
     The CPU request for the Job container (`150m`)
 -   `COOKER_MEMORY_LIMIT`
-    The Memory limit for the Job container(`150m`)
+    The Memory limit for the Job container(`10Mi`)
 -   `COOKER_MEMORY_REQUEST`
-    The Memory request for the Job container (`150m`)
+    The Memory request for the Job container (`10Mi`)
 -   `COOKER_NUM_PODS`
     The number of pods to launch (`10`)
 -   `COOKER_PRE_BUSY_SLEEP_S`
