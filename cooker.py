@@ -82,7 +82,8 @@ def main():
     # It stops the replication controller starting us up again!
     if os.environ.get('KUBERNETES_SERVICE_HOST'):
         print("That's all Folks!")
-        input()
+        while True:
+            time.sleep(4.0)
 
 
 # -----------------------------------------------------------------------------

@@ -8,7 +8,8 @@ You will need:
 -   A unix OS (sorry)
 -   Python 3
 -   An OpenShift cluster (i.e. [minishift]).
-    Tested with minishift v1.10.0 and OpenShift 3.6.0 using the command:
+    Tested with minishift v1.10.0 and OpenShift 3.6.0 and
+    OpenShift 3.7.0 using the command:
     
     `minishift start --cpus 4 --memory 8GB --disk-size 40GB
         --openshift-version 3.6.0 --vm-driver virtualbox`
@@ -84,8 +85,14 @@ To run the app within OpenShift (this example uses minishift) you need
 To give cluster-admin to the default service account, this is because you
 need to allow the application container to create Pods.
 
-To do this run the following command as the `system:admin` user...
+To do this run the following command as the `system:admin` user
+in the `pressure-pot` project...
 
+    $ eval $(minishift oc-env)
+    $ oc login -u admin
+      ...
+    $ oc new-project pressure-pot
+    $ oc login -u system:admin
     $ oc adm policy add-cluster-role-to-user cluster-admin -z default
 
 Then, you can launch the container application with the following:
