@@ -8,7 +8,10 @@ You will need:
 -   A unix OS (sorry)
 -   Python 3
 -   An OpenShift cluster (i.e. [minishift]).
-    Tested with minishift v1.10.0.
+    Tested with minishift v1.10.0 and OpenShift 3.6.0 using the command:
+    
+    `minishift start --cpus 4 --memory 8GB --disk-size 40GB
+        --openshift-version 3.6.0 --vm-driver virtualbox`
 
 ## Application configuration
 The application, which uses the [PyDataLister] container image,
@@ -38,7 +41,7 @@ can be configured with a number of environment variables,
     the pre-busy sleep period (`0`)
 
 ## Running (from the command-line)
-You can run the _cooker_ fromt he command-line and it will interact with the
+You can run the _cooker_ from the command-line and it will interact with the
 OpenShift/Kubernetes API using the client API.
 
 You will need Python 3 (ideally from within a [virtualenv]) and will need
@@ -65,6 +68,33 @@ Then, run the pressure cooker using the default values...
     $ cp setenv-example.sh setenv.sh
     $ source setenv.sh
     $ ./cooker.py
+
+## Running (as a container in OpenShift)
+You can run the application from within a container in OpenShift using the
+template in this project's `openshift` directory, which uses the application
+image on Docker hub (`alanbchristie/pykubepressurecooker`).
+
+The application then spawns multiple jobs from within the OpenShift
+environment.
+
+You can define the behaviour of the spawned `PyDataLister` jobs using the
+parameters exposed in the template.
+
+To run the app within OpenShift (this example uses minishift) you need
+To give cluster-admin to the default service account, this is because you
+need to allow the application container to create Pods.
+
+To do this run the following command as the `system:admin` user...
+
+    $ oc adm policy add-cluster-role-to-user cluster-admin -z default
+
+Then, you can launch the container application with the following:
+
+    $ oc process -f openshift/cooker.yml | oc create -f -
+
+And delete it with:
+
+    $ oc delete all --selector template=pressure-cooker
 
 ---
 

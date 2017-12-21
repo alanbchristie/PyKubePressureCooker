@@ -1,17 +1,6 @@
 ---
 
 # The PyKubePressureCooker Deployment Configuration template.
-#
-# To load:   oc process -f cooker.yml | oc create -f -
-# To unload: oc delete all --selector template=pressure-cooker
-#
-# To give cluster-admin to the default service account and avoid the
-# API error:
-#   system:serviceaccount:cooker-pot:default
-#      cannot create jobs.batch in project cooker-pot
-# Run the following command as system:admin...
-#
-# oc adm policy add-cluster-role-to-user cluster-admin -z default
 
 kind: Template
 apiVersion: v1
