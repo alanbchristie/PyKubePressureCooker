@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:3.6.4-slim
 
+# Force the binary layer of the stdout and stderr streams to be unbuffered
+ENV PYTHONUNBUFFERED 1
+
 # Base directory for the application
 # Also used for user directory
 ENV APP_ROOT /home/cooker

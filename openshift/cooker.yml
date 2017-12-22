@@ -61,9 +61,9 @@ objects:
     apiVersion: v1
     metadata:
       name: ${{IMAGE_NAME}}
-    annotations:
-      description: >
-        The Pressure Cooker deployment
+      annotations:
+        description: >
+          The Pressure Cooker deployment
     spec:
       replicas: 1
       selector:
