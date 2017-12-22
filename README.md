@@ -18,7 +18,7 @@ You will need:
 This application has been designed to launch a test image in OpenShift
 for the purposes of analysing OpenShift's behaviour when presented with
 the concurrent execution of a large number of container images, CPU and
-memory pressures and observe teh OpenShift queue process and its reaction
+memory pressures and observe the OpenShift queue process and its reaction
 to a Job that exceeds its defined CPU and memory limits.
 
 The application and the test image can be found on the Docker hub as:
@@ -44,6 +44,12 @@ a period of time and also be configured to:
 
 These features allow you to exercise OpenShift's container-based queueing,
 CPU and Memory limits.
+
+>   _Out of the box_ the application creates 10 individual Jobs that run
+    for two minutes before they exit cleanly. The default jobs do not burn the
+    CPU and do not allocate additional memory beyond that required for them
+    to start and stop. Essentially, running the application _as is_ 10 Jobs
+    should be seen to start and two minutes later they should all complete.
 
 Using this application you can judge how OpenShift reacts to a large
 number of containers that can be set to be _busy_ and _big_.
