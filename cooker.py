@@ -11,6 +11,9 @@ import time
 from runner.runner import RunnerState, RunnerStateTuple
 from runner.kubernetes_runner import KubernetesRunner
 
+# Pull configuration from the environment.
+NUM_PODS = os.environ.get('COOKER_NUM_PODS', '10')
+
 # Number of runners...
 _NUM_RUNNERS_TO_FINISH = 0
 # Number of runners running..
@@ -64,7 +67,7 @@ def main():
     print('Starting...')
 
     # Start Runners...
-    _NUM_RUNNERS_TO_FINISH = 10
+    _NUM_RUNNERS_TO_FINISH = int(NUM_PODS)
     for runner_number in range(1, _NUM_RUNNERS_TO_FINISH + 1):
 
         print('Creating KubernetesRunner (%s)...' % runner_number)

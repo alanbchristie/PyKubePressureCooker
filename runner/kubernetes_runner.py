@@ -27,7 +27,6 @@ CPU_LIMIT = os.environ.get('COOKER_CPU_LIMIT', '150m')
 CPU_REQUEST = os.environ.get('COOKER_CPU_REQUEST', '150m')
 MEMORY_LIMIT = os.environ.get('COOKER_MEMORY_LIMIT', '10Mi')
 MEMORY_REQUEST = os.environ.get('COOKER_MEMORY_REQUEST', '10Mi')
-NUM_PODS = os.environ.get('COOKER_NUM_PODS', '10')
 PRE_BUSY_SLEEP_S = float(os.environ.get('COOKER_PRE_BUSY_SLEEP_S', '120.0'))
 USE_MEMORY_M = int(os.environ.get('COOKER_USE_MEMORY_M', '0'))
 
