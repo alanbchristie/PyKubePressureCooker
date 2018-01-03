@@ -26,7 +26,7 @@ Docker hub as:
 -   `alanbchristie/pykubepressurecooker` (the main app)
 -   `alanbchristie/pydatalister` (launched as child jobs)
 
->   The pressure cooker (and the pods it creates) is written in Python 3.
+>   The pressure cooker (and the jobs it creates) is written in Python 3.
 
 >   The pressure cooker can also be run from source on the command-line using
     its public GitHub repository. Instructions for running from the
@@ -77,8 +77,8 @@ parameters. The default values are displayed in brackets:
     The Memory limit for the Job container(`10Mi`)
 -   `COOKER_MEMORY_REQUEST`
     The Memory request for the Job container (`10Mi`)
--   `COOKER_NUM_PODS`
-    The number of pods to launch (`10`)
+-   `COOKER_NUM_JOBS`
+    The number of Jobs to launch (`10`)
 -   `COOKER_PRE_BUSY_SLEEP_S`
     The period of time, in seconds, after launching the Job to pause before
     looking busy or consuming memory (`120.0`)
@@ -143,7 +143,15 @@ Then, you can launch the cooker with the following:
 
     $ oc process -f openshift/cooker.yml | oc create -f -
 
-And delete it with:
+Alternatively, to run the stress test with 5 Jobs, a 2 second sleep,
+with each Job running a single thread and 8 units of work...
+
+    $ oc process -f openshift/cooker.yml \
+        -p NUM_JOBS=5 -p PRE_BUSY_SLEEP_S=2 -p BUSY_PROCESSES=1 -p BUSY_WORK=8 \
+        | oc create -f -
+
+And delete the application (which you'll want to do 
+in order to run another test) with:
 
     $ oc delete all --selector template=pressure-cooker
 

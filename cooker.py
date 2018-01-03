@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""The `cooker`. Launches OpenShift/Kubernetes Pods and monitors their
+"""The `cooker`. Launches OpenShift/Kubernetes Jobs and monitors their
 life-cycle, recording those that launched successfully and those that
 failed.
 """
@@ -12,7 +12,7 @@ from runner.runner import RunnerState, RunnerStateTuple
 from runner.kubernetes_runner import KubernetesRunner
 
 # Pull configuration from the environment.
-NUM_PODS = os.environ.get('COOKER_NUM_PODS', '10')
+NUM_JOBS = os.environ.get('COOKER_NUM_JOBS', '10')
 
 # Number of runners...
 _NUM_RUNNERS_TO_FINISH = 0
@@ -41,7 +41,7 @@ def callback(state, context):
     if state.state == RunnerState.END:
         _NUM_RUNNERS_TO_FINISH -= 1
         # Some runners may not get to a running state
-        # Because we're handling callbacks for every Pod/Job
+        # Because we're handling callbacks for every Job
         if _NUM_RUNNERS_RUNNING > 0:
             _NUM_RUNNERS_RUNNING -= 1
     elif state.state == RunnerState.RUNNING:
@@ -67,7 +67,7 @@ def main():
     print('Starting...')
 
     # Start Runners...
-    _NUM_RUNNERS_TO_FINISH = int(NUM_PODS)
+    _NUM_RUNNERS_TO_FINISH = int(NUM_JOBS)
     for runner_number in range(1, _NUM_RUNNERS_TO_FINISH + 1):
 
         print('Creating KubernetesRunner (%s)...' % runner_number)

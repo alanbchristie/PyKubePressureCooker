@@ -48,7 +48,7 @@ parameters:
     value: '10Mi'
   - name: MEMORY_REQUEST
     value: '10Mi'
-  - name: NUM_PODS
+  - name: NUM_JOBS
     value: '10'
   - name: PRE_BUSY_SLEEP_S
     value: '120.0'
@@ -93,8 +93,8 @@ objects:
               value: ${MEMORY_LIMIT}
             - name: COOKER_MEMORY_REQUEST
               value: ${MEMORY_REQUEST}
-            - name: COOKER_NUM_PODS
-              value: ${NUM_PODS}
+            - name: COOKER_NUM_JOBS
+              value: ${NUM_JOBS}
             - name: COOKER_PRE_BUSY_SLEEP_S
               value: ${PRE_BUSY_SLEEP_S}
             - name: COOKER_USE_MEMORY_M
