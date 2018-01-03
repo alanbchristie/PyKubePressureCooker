@@ -36,6 +36,8 @@ parameters:
 
   - name: BUSY_PERIOD
     value: '0.0'
+  - name: BUSY_WORK
+    value: '0'
   - name: BUSY_PROCESSES
     value: '0'
   - name: CPU_LIMIT
@@ -79,6 +81,8 @@ objects:
             env:
             - name: COOKER_BUSY_PERIOD
               value: ${BUSY_PERIOD}
+            - name: COOKER_BUSY_WORK
+              value: ${BUSY_WORK}
             - name: COOKER_BUSY_PROCESSES
               value: ${BUSY_PROCESSES}
             - name: COOKER_CPU_LIMIT

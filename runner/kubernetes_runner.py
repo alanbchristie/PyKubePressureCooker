@@ -22,6 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 # Retrieve configuration from the environment, using defaults if needed.
 BUSY_PERIOD = float(os.environ.get('COOKER_BUSY_PERIOD', '0.0'))
+BUSY_WORK = int(os.environ.get('COOKER_BUSY_WORK', '0'))
 BUSY_PROCESSES = int(os.environ.get('COOKER_BUSY_PROCESSES', '0'))
 CPU_LIMIT = os.environ.get('COOKER_CPU_LIMIT', '150m')
 CPU_REQUEST = os.environ.get('COOKER_CPU_REQUEST', '150m')
@@ -120,7 +121,9 @@ class KubernetesRunner(Runner):
                 - name: POST_LIST_SLEEP
                   value: "{sleep}"
                 - name: POST_SLEEP_BUSY_PERIOD
-                  value: "{busy}"
+                  value: "{period}"
+                - name: POST_SLEEP_BUSY_WORK
+                  value: "{work}"
                 - name: BUSY_PROCESSES
                   value: "{processes}"
                 - name: USE_MEMORY_M
@@ -136,7 +139,7 @@ class KubernetesRunner(Runner):
               restartPolicy: Never
               backOffLimit: 0
         """.format(name=self._job_name, image=image_fq_name,
-                   sleep=PRE_BUSY_SLEEP_S, busy=BUSY_PERIOD,
+                   sleep=PRE_BUSY_SLEEP_S, period=BUSY_PERIOD, work=BUSY_WORK,
                    processes=BUSY_PROCESSES, memory=USE_MEMORY_M,
                    c_limit=CPU_LIMIT, c_request=CPU_REQUEST,
                    m_limit=MEMORY_LIMIT, m_request=MEMORY_REQUEST)
@@ -221,7 +224,7 @@ class KubernetesRunner(Runner):
     def _wait_for_job_complete(self):
         """Wait for job completion (whether successful or not).
 
-        :returns: True is completed successfully.
+        :returns: True if completed successfully.
         """
         _LOGGER.debug('Waiting for Job complete (%s)...', self._job_name)
 

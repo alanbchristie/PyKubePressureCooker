@@ -57,7 +57,16 @@ parameters. The default values are displayed in brackets:
 
 -   `COOKER_BUSY_PERIOD`
     The period of time to burn the CPU, in seconds. The CPU stressing
-    takes place after the defined pre-busy period (`0.0`)
+    takes place after the defined pre-busy period (`0.0`). Using this value
+    you can set the child containers to run for a fixed period of time.
+    If you want to do a fixed amount of work use the `COOKER_BUSY_WORK`
+    parameter.
+-   `COOKER_BUSY_WORK`
+    The amount of work to do in burning the CPU, in unit. The CPU stressing
+    takes place after the defined pre-busy period (`0`). Using this value
+    you can set the child containers to do a fixed amount of work (which is a
+    a factorial of 150000). If you want to do burn the CPU for a fixed amount
+    of time use the `COOKER_BUSY_PERIOD` parameter.
 -   `COOKER_BUSY_PROCESSES`.
     The number of separate process threads to use to stress the CPU (`0`)
 -   `COOKER_CPU_LIMIT`.
@@ -147,4 +156,4 @@ And delete it with:
 [VirtualEnv]: https://virtualenvwrapper.readthedocs.io/en/latest/
 
 _Alan B. Christie  
-December 2017_
+January 2018_
